@@ -15,8 +15,8 @@
             "url": "http://opensource.org/licenses/MIT"
         }
     },
-    "host": "localhost/movies",
-    "basePath": "/api",
+    "host": "localhost",
+    "basePath": "/movies/api",
     "schemes": [
         "http"
     ],
@@ -27,7 +27,7 @@
         "application/json"
     ],
     "paths": {
-        "/movies": {
+        "/movies/": {
             "get": {
                 "description": "Returns all movies from database",
                 "operationId": "findMovies",
