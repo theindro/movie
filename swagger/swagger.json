@@ -16,7 +16,7 @@
         }
     },
     "host": "localhost",
-    "basePath": "/movies/api",
+    "basePath": "/swagger",
     "schemes": [
         "http"
     ],
@@ -71,6 +71,9 @@
             "post": {
                 "description": "Add a new movie to website.",
                 "operationId": "addMovie",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -102,7 +105,7 @@
             },
             "put": {
                 "tags": [
-                    "pet"
+                    "movie"
                 ],
                 "summary": "Update an existing movie",
                 "description": "",
@@ -142,7 +145,7 @@
         "/movies/{id}": {
             "get": {
                 "description": "Returns a movie based on id.",
-                "operationId": "findPetById",
+                "operationId": "findMovieById",
                 "produces": [
                     "application/json",
                     "application/xml",
@@ -220,7 +223,8 @@
                     "type": "string"
                 },
                 "releaseDate": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date"
                 },
                 "genre": {
                     "type": "string"
