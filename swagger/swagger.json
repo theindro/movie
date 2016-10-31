@@ -1,0 +1,273 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Movies",
+        "description": "A simple API that shows information about movies.",
+        "termsOfService": "http://localhost/terms",
+        "contact": {
+            "name": "Movies team",
+            "email": "indro@movies.com",
+            "url": "http://localhost.com/"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost",
+    "basePath": "/movies/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/movies/": {
+            "get": {
+                "description": "Returns all movies from database",
+                "operationId": "findMovies",
+                "produces": [
+                    "application/json",
+                    "application/xml",
+                    "text/xml",
+                    "text/html"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "filters movies containing `name` in name",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "csv"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "movie response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/movie"
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new movie to website.",
+                "operationId": "addMovie",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "movie",
+                        "in": "body",
+                        "description": "Movie to add to the website",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/newMovie"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "movie response",
+                        "schema": {
+                            "$ref": "#/definitions/movie"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "pet"
+                ],
+                "summary": "Update an existing movie",
+                "description": "",
+                "operationId": "updateMovie",
+                "consumes": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/xml"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "movie",
+                        "description": "Update movie",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/movie"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "movie not found"
+                    },
+                    "405": {
+                        "description": "Validation exception"
+                    }
+                }
+            }
+        },
+        "/movies/{id}": {
+            "get": {
+                "description": "Returns a movie based on id.",
+                "operationId": "findPetById",
+                "produces": [
+                    "application/json",
+                    "application/xml",
+                    "text/xml",
+                    "text/html"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of movie to fetch",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requested movie in JSON",
+                        "schema": {
+                            "$ref": "#/definitions/movie"
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "deletes a single movie based on the ID supplied",
+                "operationId": "deleteMovie",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of movie to delete",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Movie is deleted"
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/errorModel"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "movie": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "releaseDate": {
+                    "type": "string"
+                },
+                "genre": {
+                    "type": "string"
+                },
+                "cast": {
+                    "type": "string"
+                }
+            }
+        },
+        "newMovie": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "releaseDate": {
+                    "type": "string"
+                },
+                "genre": {
+                    "type": "string"
+                },
+                "cast": {
+                    "type": "string"
+                }
+            }
+        },
+        "errorModel": {
+            "type": "object",
+            "required": [
+                "code",
+                "message"
+            ],
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
