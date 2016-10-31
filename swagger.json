@@ -223,7 +223,8 @@
                     "type": "string"
                 },
                 "releaseDate": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "date"
                 },
                 "genre": {
                     "type": "string"
