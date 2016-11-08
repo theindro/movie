@@ -6,8 +6,13 @@ use Veebiteenus\Controller;
 
 class movies extends Controller
 {
+    function get(){
+        $movies = $this->db->from("movies")->fetchAll();
 
-    function get()
+        // Output json encoded data
+        $this->output($movies);
+    }
+    function getByName()
     {
         // Ensure that name exists
         $movies = empty($_GET['name']) ? '' : $_GET['name'];
@@ -24,7 +29,9 @@ class movies extends Controller
 
     function post()
     {
-        $result = $this->db->insertInto('movies', $_POST)->execute();
+        $json = file_get_contents('php://input');
+        $movie = json_decode($json, 1);
+        $result = $this->db->insertInto('movies', $movie)->execute();
         $this->output((array)$result);
     }
 
@@ -33,10 +40,11 @@ class movies extends Controller
         // Convert json encoded request body into object
         $request = json_decode(file_get_contents('php://input'));
 
-        // Validate releaseDate
+        /* Validate releaseDate
         if (!empty($request->releaseDate) && !valid_date($request->releaseDate)) {
             output_error(405, "ReleaseDate is not valid");
         }
+        */
 
         // Define fields allowed for updating
         $allowed_fields = array_flip([
